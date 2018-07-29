@@ -1,0 +1,8 @@
+# Directory settings for Plasma
+*.directory
+
+# CMakeLists project settings
+*.txt.user
+
+# Windows binary versions of resource files
+*.aps

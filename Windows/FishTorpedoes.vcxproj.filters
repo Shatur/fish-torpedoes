@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scenes">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b9-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="objects">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b0-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ConfigParser.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scenes\SplashScene.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scenes\MainMenuScene.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scenes\SettingsScene.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scenes\GameScene.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scenes\PauseScene.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Scenes\EndScene.cpp">
+      <Filter>scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects\Background.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects\Fish.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects\KillerFish.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Objects\Torpedo.cpp">
+      <Filter>objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ConfigParser.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scenes\SplashScene.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scenes\MainMenuScene.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scenes\SettingsScene.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scenes\GameScene.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scenes\PauseScene.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Scenes\EndScene.h">
+      <Filter>scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects\Background.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects\Fish.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects\KillerFish.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Objects\Torpedo.h">
+      <Filter>objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
