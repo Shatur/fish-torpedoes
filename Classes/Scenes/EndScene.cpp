@@ -21,12 +21,14 @@
 #include "Scenes/EndScene.h"
 
 #include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 #include "Scenes/GameScene.h"
 #include "Scenes/MainMenuScene.h"
 #include "Objects/Background.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 bool EndScene::init()
 {
@@ -103,17 +105,23 @@ void EndScene::setScore(int fishCount, int fishKilled, unsigned timeLeft)
 
 void EndScene::retry()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
+
     auto gameScene = GameScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, gameScene));
 }
 
 void EndScene::toMainMenu()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
+
     auto mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, mainMenuScene));
 }
 
 void EndScene::quitGame()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
+
     Director::getInstance()->end();
 }

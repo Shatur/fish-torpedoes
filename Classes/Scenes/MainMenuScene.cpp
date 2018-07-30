@@ -21,12 +21,13 @@
 #include "Scenes/MainMenuScene.h"
 
 #include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 #include "Scenes/SettingsScene.h"
 #include "Scenes/GameScene.h"
 #include "Objects/Background.h"
 
-USING_NS_CC;
+using namespace CocosDenshion;
 
 bool MainMenuScene::init()
 {
@@ -77,17 +78,23 @@ bool MainMenuScene::init()
 
 void MainMenuScene::toGameScene()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     auto gameScene = GameScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInR::create(0.5, gameScene));
 }
 
 void MainMenuScene::toSettings()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     auto gameScene = SettingsScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5, gameScene));
 }
 
 void MainMenuScene::quit()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     Director::getInstance()->end();
 }

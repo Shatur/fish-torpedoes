@@ -21,12 +21,14 @@
 #include "Scenes/PauseScene.h"
 
 #include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 #include "Scenes/GameScene.h"
 #include "Scenes/MainMenuScene.h"
 #include "Objects/Background.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 bool PauseScene::init()
 {
@@ -78,17 +80,23 @@ bool PauseScene::init()
 
 void PauseScene::resumeGame()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     Director::getInstance()->popScene();
 }
 
 void PauseScene::toMainMenu()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     auto mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, mainMenuScene));
 }
 
 void PauseScene::quitGame()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     Director::getInstance()->end();
 }
 

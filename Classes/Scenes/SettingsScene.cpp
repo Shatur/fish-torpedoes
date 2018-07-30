@@ -21,9 +21,12 @@
 #include "Scenes/SettingsScene.h"
 
 #include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 #include "Scenes/MainMenuScene.h"
 #include "Objects/Background.h"
+
+using namespace CocosDenshion;
 
 bool SettingsScene::init()
 {
@@ -137,6 +140,8 @@ bool SettingsScene::init()
 
 void SettingsScene::applySettings()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     config.setCount(countSlider->getPercent());
     config.setSpeed(speedSlider->getPercent());
     config.setTime(timeSlider->getPercent());
@@ -148,6 +153,8 @@ void SettingsScene::applySettings()
 
 void SettingsScene::cancelSettings()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
+
     auto mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInR::create(0.5, mainMenuScene));
 }
@@ -193,15 +200,18 @@ void SettingsScene::setTimeSlider()
 
 void SettingsScene::setCountField()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
     countField->setString(std::to_string(countSlider->getPercent()));
 }
 
 void SettingsScene::setSpeedField()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
     speedField->setString(std::to_string(speedSlider->getPercent()));
 }
 
 void SettingsScene::setTimeField()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
     timeField->setString(std::to_string(timeSlider->getPercent()));
 }
