@@ -2,7 +2,7 @@
 
 **Code**: Gennady Chernyshchuk
 
-## Used graphics
+## Used assets
 
 ### [Fish Pack](https://www.kenney.nl/assets/fish-pack)
 
@@ -22,7 +22,17 @@
 
 **Licenses:** CC0
 
-## Used Fonts
+### [9 explosion sounds](https://opengameart.org/content/9-explosion-sounds)
+
+**Authors:** Unnamed
+
+**Licenses:** CC-BY-SA 3.0
+
+### [2 High Quality Explosions](https://opengameart.org/content/2-high-quality-explosions)
+
+**Authors:** Michel Baradari
+
+**Licenses:** CC-BY 3.0
 
 ### [DS Marker Felt](https://www.1001fonts.com/ds-marker-felt-font.html)
 

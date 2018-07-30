@@ -200,18 +200,15 @@ void SettingsScene::setTimeSlider()
 
 void SettingsScene::setCountField()
 {
-    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
     countField->setString(std::to_string(countSlider->getPercent()));
 }
 
 void SettingsScene::setSpeedField()
 {
-    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
     speedField->setString(std::to_string(speedSlider->getPercent()));
 }
 
 void SettingsScene::setTimeField()
 {
-    SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
     timeField->setString(std::to_string(timeSlider->getPercent()));
 }

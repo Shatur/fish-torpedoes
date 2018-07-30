@@ -20,7 +20,10 @@
 
 #include "Torpedo.h"
 
+#include "SimpleAudioEngine.h"
+
 USING_NS_CC;
+using namespace CocosDenshion;
 
 bool Torpedo::init()
 {
@@ -43,6 +46,9 @@ bool Torpedo::init()
 
 void Torpedo::explodeNormal()
 {
+    std::string soundFile = "Sounds/TorpedoExplosions/" + std::to_string(random(1,9)) + ".wav";
+    SimpleAudioEngine::getInstance()->playEffect(soundFile.c_str());
+
     auto explosion = ParticleSystemQuad::create("Particles/TorpedoExplosion.plist");
     explosion->setPosition(this->getPosition());
     this->getParent()->addChild(explosion);
@@ -51,6 +57,9 @@ void Torpedo::explodeNormal()
 
 void Torpedo::explodeSand()
 {
+    std::string soundFile = "Sounds/TorpedoExplosions/" + std::to_string(random(1,9)) + ".wav";
+    SimpleAudioEngine::getInstance()->playEffect(soundFile.c_str());
+
     auto explosion = ParticleSystemQuad::create("Particles/SandExplosion.plist");
     explosion->setPosition(this->getPosition());
     this->getParent()->addChild(explosion);

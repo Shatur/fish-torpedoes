@@ -31,6 +31,7 @@
 #include "Objects/Torpedo.h"
 
 USING_NS_CC;
+using namespace CocosDenshion;
 
 bool GameScene::init()
 {
@@ -173,6 +174,8 @@ void GameScene::spawnKillerFish(float delta)
 
 void GameScene::explodeCannon()
 {
+    SimpleAudioEngine::getInstance()->playEffect("Sounds/CannonExplosion.wav");
+
     this->unschedule(CC_SCHEDULE_SELECTOR(GameScene::spawnKillerFish));
     _eventDispatcher->removeEventListenersForType(EventListener::Type::MOUSE);
     _eventDispatcher->removeEventListenersForType(EventListener::Type::KEYBOARD);
