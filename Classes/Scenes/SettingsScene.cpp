@@ -66,6 +66,9 @@ bool SettingsScene::init()
     countSlider->setAnchorPoint(Vec2(0.5, 0));
     speedSlider = static_cast<ui::Slider*>(countSlider->clone());
     timeSlider = static_cast<ui::Slider*>(countSlider->clone());
+
+
+    countSlider->setMaxPercent(50);
     speedSlider->setMaxPercent(1000);
 
     countSlider->setPercent(config.getCount());
