@@ -49,10 +49,14 @@ void Torpedo::explodeNormal()
     std::string soundFile = "Sounds/TorpedoExplosions/" + std::to_string(random(1,9)) + ".wav";
     SimpleAudioEngine::getInstance()->playEffect(soundFile.c_str());
 
-    auto explosion = ParticleSystemQuad::create("Particles/TorpedoExplosion.plist");
-    explosion->setPosition(this->getPosition());
-    this->getParent()->addChild(explosion);
-    this->removeFromParentAndCleanup(true);
+    // Check if torpedo exploded before
+    if (this->getParent()) {
+        // Explode and remove from memory
+        auto explosion = ParticleSystemQuad::create("Particles/TorpedoExplosion.plist");
+        explosion->setPosition(this->getPosition());
+        this->getParent()->addChild(explosion);
+        this->removeFromParent();
+    }
 }
 
 void Torpedo::explodeSand()
