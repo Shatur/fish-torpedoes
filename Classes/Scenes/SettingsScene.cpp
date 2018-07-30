@@ -58,7 +58,7 @@ bool SettingsScene::init()
     auto timeText = static_cast<ui::Text*>(speedText->clone());
 
     countText->setString("Number of fish");
-    speedText->setString("Fish speed");
+    speedText->setString("Torpedo speed");
     timeText->setString("Game time");
 
     // Sliders
