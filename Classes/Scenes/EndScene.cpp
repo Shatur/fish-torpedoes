@@ -20,12 +20,12 @@
 
 #include "Scenes/EndScene.h"
 
-#include "ui/CocosGUI.h"
-#include "SimpleAudioEngine.h"
-
 #include "Scenes/GameScene.h"
 #include "Scenes/MainMenuScene.h"
 #include "Objects/Background.h"
+
+#include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -36,17 +36,17 @@ bool EndScene::init()
         return false;
 
     // Background
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto background = Sprite::create("PauseBackground.png");
+    const Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto *background = Sprite::create("PauseBackground.png");
     background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
     this->addChild(background);
 
     // Buttons
-    auto resumeButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
+    auto *resumeButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
     resumeButton->setTitleFontName("Fonts/DSMarkerFelt.ttf");
     resumeButton->setTitleFontSize(22);
-    auto mainMenuButton = static_cast<ui::Button*>(resumeButton->clone());
-    auto quitButton = static_cast<ui::Button*>(mainMenuButton->clone());
+    auto *mainMenuButton = static_cast<ui::Button*>(resumeButton->clone());
+    auto *quitButton = static_cast<ui::Button*>(mainMenuButton->clone());
 
     resumeButton->setTitleText("Retry");
     mainMenuButton->setTitleText("Main menu");
@@ -57,7 +57,7 @@ bool EndScene::init()
     quitButton->addClickEventListener(CC_CALLBACK_0(EndScene::quitGame, this));
 
     // Buttons container
-    auto menuLayout = ui::VBox::create();
+    auto *menuLayout = ui::VBox::create();
     menuLayout->addChild(resumeButton);
     menuLayout->addChild(mainMenuButton);
     menuLayout->addChild(quitButton);
@@ -70,8 +70,8 @@ bool EndScene::init()
 
 void EndScene::setScore(int fishCount, int fishKilled, unsigned timeLeft)
 {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto title = ui::Text::create();
+    const Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto *title = ui::Text::create();
     title->setFontName("Fonts/DSMarkerFelt.ttf");
     title->setFontSize(48);
     title->setPosition(Vec2(visibleSize.width / 2, visibleSize.height * 0.75f));
@@ -82,10 +82,10 @@ void EndScene::setScore(int fishCount, int fishKilled, unsigned timeLeft)
         title->setString("You win");
 
     // Fish killed label
-    auto fishKilleText = ui::Text::create();
+    auto *fishKilleText = ui::Text::create();
     fishKilleText->setFontName("Fonts/DSMarkerFelt.ttf");
     fishKilleText->setFontSize(24);
-    auto timeLeftText = static_cast<ui::Text*>(fishKilleText->clone());
+    auto *timeLeftText = static_cast<ui::Text*>(fishKilleText->clone());
 
     fishKilleText->setString("Fish killed: " + std::to_string(fishKilled) +"/" + std::to_string(fishCount));
     if (timeLeft > 0)
@@ -107,7 +107,7 @@ void EndScene::retry()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
 
-    auto gameScene = GameScene::create();
+    auto *gameScene = GameScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, gameScene));
 }
 
@@ -115,13 +115,12 @@ void EndScene::toMainMenu()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
 
-    auto mainMenuScene = MainMenuScene::create();
+    auto *mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, mainMenuScene));
 }
 
 void EndScene::quitGame()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Rollover.ogg");
-
     Director::getInstance()->end();
 }

@@ -29,9 +29,9 @@ bool SplashScene::init()
     if (!Scene::init())
         return false;
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto label = Label::createWithTTF("<Awesome logo>", "Fonts/DSMarkerFelt.ttf", 78, Size::ZERO, TextHAlignment::CENTER);
-    auto noteLabel = Label::createWithTTF("(that does not exist)", "Fonts/DSMarkerFelt.ttf", 48, Size::ZERO, TextHAlignment::CENTER);
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto *label = Label::createWithTTF("<Awesome logo>", "Fonts/DSMarkerFelt.ttf", 78, Size::ZERO, TextHAlignment::CENTER);
+    auto *noteLabel = Label::createWithTTF("(that does not exist)", "Fonts/DSMarkerFelt.ttf", 48, Size::ZERO, TextHAlignment::CENTER);
     label->setPosition(visibleSize.width / 2, visibleSize.height / 2);
     noteLabel->setPosition(visibleSize.width / 2, visibleSize.height / 2 - label->getContentSize().height);
     this->addChild(label);
@@ -41,9 +41,9 @@ bool SplashScene::init()
     return true;
 }
 
-void SplashScene::toMainMenuScene(float delta)
+void SplashScene::toMainMenuScene(float)
 {
-    auto mainMenuScene = MainMenuScene::create();
+    auto *mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionFade::create(2, mainMenuScene));
 }
 

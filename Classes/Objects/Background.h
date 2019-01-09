@@ -34,7 +34,7 @@ public:
 private:
     virtual bool init();
     void spawnBackgroundFish();
-    void spawnBubles(float delta);
+    void spawnBubles(float);
 
     cocos2d::Sprite* buttom;
 };

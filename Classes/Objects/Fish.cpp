@@ -32,7 +32,7 @@ bool Fish::init()
     sprite->setTexture("Fish/Fish" + std::to_string(sprite->getTag()) + ".png");
     this->addChild(sprite);
 
-    auto body = PhysicsBody::createCircle(sprite->getContentSize().width / 2, PhysicsMaterial(0.1f, 1, 0));
+    auto *body = PhysicsBody::createCircle(sprite->getContentSize().width / 2, PhysicsMaterial(0.1f, 1, 0));
     body->setVelocity(Vec2(random(-150, 150), random(-150, 150)));
     body->setGravityEnable(false);
     this->addComponent(body);

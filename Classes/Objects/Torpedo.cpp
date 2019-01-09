@@ -33,11 +33,11 @@ bool Torpedo::init()
     sprite = Sprite::create("Cannon/Torpedo.png");
     this->addChild(sprite);
 
-    auto body = PhysicsBody::createBox(sprite->getContentSize());
+    auto *body = PhysicsBody::createBox(sprite->getContentSize());
     body->setGravityEnable(false);
     this->addComponent(body);
 
-    auto trace = ParticleSystemQuad::create("Particles/TorpedoTrace.plist");
+    auto *trace = ParticleSystemQuad::create("Particles/TorpedoTrace.plist");
     trace->setPosition(sprite->getPosition().x, sprite->getPosition().y - sprite->getContentSize().height / 2);
     this->addChild(trace);
 
@@ -46,13 +46,13 @@ bool Torpedo::init()
 
 void Torpedo::explodeNormal()
 {
-    std::string soundFile = "Sounds/TorpedoExplosions/" + std::to_string(random(1,9)) + ".wav";
+    const std::string soundFile = "Sounds/TorpedoExplosions/" + std::to_string(random(1,9)) + ".wav";
     SimpleAudioEngine::getInstance()->playEffect(soundFile.c_str());
 
     // Check if torpedo exploded before
     if (this->getParent()) {
         // Explode and remove from memory
-        auto explosion = ParticleSystemQuad::create("Particles/TorpedoExplosion.plist");
+        auto *explosion = ParticleSystemQuad::create("Particles/TorpedoExplosion.plist");
         explosion->setPosition(this->getPosition());
         this->getParent()->addChild(explosion);
         this->removeFromParent();
@@ -61,10 +61,10 @@ void Torpedo::explodeNormal()
 
 void Torpedo::explodeSand()
 {
-    std::string soundFile = "Sounds/TorpedoExplosions/" + std::to_string(random(1,9)) + ".wav";
+    const std::string soundFile = "Sounds/TorpedoExplosions/" + std::to_string(random(1,9)) + ".wav";
     SimpleAudioEngine::getInstance()->playEffect(soundFile.c_str());
 
-    auto explosion = ParticleSystemQuad::create("Particles/SandExplosion.plist");
+    auto *explosion = ParticleSystemQuad::create("Particles/SandExplosion.plist");
     explosion->setPosition(this->getPosition());
     this->getParent()->addChild(explosion);
     this->removeFromParentAndCleanup(true);

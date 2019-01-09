@@ -26,13 +26,11 @@
 class SplashScene : public cocos2d::Scene
 {
 public:
-    virtual bool init();
-    void toMainMenuScene(float delta);
-
     CREATE_FUNC(SplashScene)
 
 private:
-
+    virtual bool init();
+    void toMainMenuScene(float);
 };
 
 #endif // SPLASHSCENE_H

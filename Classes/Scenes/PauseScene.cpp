@@ -20,12 +20,12 @@
 
 #include "Scenes/PauseScene.h"
 
-#include "ui/CocosGUI.h"
-#include "SimpleAudioEngine.h"
-
 #include "Scenes/GameScene.h"
 #include "Scenes/MainMenuScene.h"
 #include "Objects/Background.h"
+
+#include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -36,17 +36,17 @@ bool PauseScene::init()
         return false;
 
     // Background
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto background = Sprite::create("PauseBackground.png");
+    const Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto *background = Sprite::create("PauseBackground.png");
     background->setPosition(visibleSize.width / 2, visibleSize.height / 2);
     this->addChild(background);
 
     // Buttons
-    auto resumeButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
+    auto *resumeButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
     resumeButton->setTitleFontName("Fonts/DSMarkerFelt.ttf");
     resumeButton->setTitleFontSize(22);
-    auto mainMenuButton = static_cast<ui::Button*>(resumeButton->clone());
-    auto quitButton = static_cast<ui::Button*>(mainMenuButton->clone());
+    auto *mainMenuButton = static_cast<ui::Button*>(resumeButton->clone());
+    auto *quitButton = static_cast<ui::Button*>(mainMenuButton->clone());
 
     resumeButton->setTitleText("Resume");
     mainMenuButton->setTitleText("Main menu");
@@ -57,7 +57,7 @@ bool PauseScene::init()
     quitButton->addClickEventListener(CC_CALLBACK_0(PauseScene::quitGame, this));
 
     // Buttons container
-    auto menuLayout = ui::VBox::create();
+    auto *menuLayout = ui::VBox::create();
     menuLayout->addChild(resumeButton);
     menuLayout->addChild(mainMenuButton);
     menuLayout->addChild(quitButton);
@@ -66,12 +66,12 @@ bool PauseScene::init()
     this->addChild(menuLayout);
 
     // Title
-    auto title = ui::Text::create("Pause", "Fonts/DSMarkerFelt.ttf", 48);
+    auto *title = ui::Text::create("Pause", "Fonts/DSMarkerFelt.ttf", 48);
     title->setPosition(Vec2(visibleSize.width / 2, visibleSize.height * 0.75f + title->getContentSize().height / 2));
     this->addChild(title);
 
     // Keyboard listener
-    auto keyboardListener = EventListenerKeyboard::create();
+    auto *keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_1(PauseScene::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
@@ -81,7 +81,6 @@ bool PauseScene::init()
 void PauseScene::resumeGame()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
-
     Director::getInstance()->popScene();
 }
 
@@ -89,14 +88,13 @@ void PauseScene::toMainMenu()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
 
-    auto mainMenuScene = MainMenuScene::create();
+    auto *mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInT::create(0.5, mainMenuScene));
 }
 
 void PauseScene::quitGame()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
-
     Director::getInstance()->end();
 }
 

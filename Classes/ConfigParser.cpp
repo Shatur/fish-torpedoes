@@ -26,47 +26,47 @@ USING_NS_CC;
 
 ConfigParser::ConfigParser()
 {
+    constexpr int DEFAULT_FISH_COUNT = 13;
+    constexpr int DEFAULT_FISH_SPEED = 666;
+    constexpr int DEFAULT_FISH_TIME = 13;
+
     std::string config;
 
     // Read data from input.txt
-    if (FileUtils::getInstance()->getContents("input.txt", &config) == FileUtils::Status::OK) {
-
-        // Parse config
-        auto keyPosition = config.find("CountTarget=");
-        auto valuePosition = config.find("\n", keyPosition);
-        try {
-            count = stoi(config.substr(keyPosition + 12, valuePosition));
-        }
-        catch (...) {
-            log("Unable to read 'CountTarget=' from 'input.txt'");
-            count = 13;
-        }
-
-        keyPosition = config.find("Speed=");
-        valuePosition = config.find("\n", keyPosition);
-        try {
-            speed = stoi(config.substr(keyPosition + 6, valuePosition));
-        }
-        catch (...) {
-            log("Unable to read 'Speed=' from 'input.txt'");
-            count = 666;
-        }
-
-        keyPosition = config.find("Time=");
-        valuePosition = config.find("\n", keyPosition);
-        try {
-            time = stoi(config.substr(keyPosition + 5, valuePosition));
-        }
-        catch (...) {
-            log("Unable to read 'Time=' from 'input.txt'");
-            count = 13;
-        }
-    }
-    else {
+    if (FileUtils::getInstance()->getContents("input.txt", &config) != FileUtils::Status::OK) {
         log("Unable to open input.txt");
-        count = 13;
-        speed = 666;
-        time = 13;
+        count = DEFAULT_FISH_COUNT;
+        speed = DEFAULT_FISH_SPEED;
+        time = DEFAULT_FISH_TIME;
+        return;
+    }
+
+    // Parse config
+    unsigned long keyPosition = config.find("CountTarget=");
+    unsigned long valuePosition = config.find("\n", keyPosition);
+    try {
+        count = stoi(config.substr(keyPosition + 12, valuePosition));
+    } catch (...) {
+        log("Unable to read 'CountTarget=' from 'input.txt'");
+        count = DEFAULT_FISH_COUNT;
+    }
+
+    keyPosition = config.find("Speed=");
+    valuePosition = config.find("\n", keyPosition);
+    try {
+        speed = stoi(config.substr(keyPosition + 6, valuePosition));
+    } catch (...) {
+        log("Unable to read 'Speed=' from 'input.txt'");
+        count = DEFAULT_FISH_SPEED;
+    }
+
+    keyPosition = config.find("Time=");
+    valuePosition = config.find("\n", keyPosition);
+    try {
+        time = stoi(config.substr(keyPosition + 5, valuePosition));
+    } catch (...) {
+        log("Unable to read 'Time=' from 'input.txt'");
+        count = DEFAULT_FISH_TIME;
     }
 }
 
@@ -106,7 +106,7 @@ void ConfigParser::writeConfig()
     config.append("Speed=" + std::to_string(speed) + "\n");
     config.append("Time=" + std::to_string(time) + "\n");
 
-    auto fileUtils  = FileUtils::getInstance();
+    const auto *fileUtils  = FileUtils::getInstance();
     if (fileUtils->writeStringToFile(config, fileUtils->fullPathForFilename("input.txt")))
         log("Unable to write 'input.txt'");
 }

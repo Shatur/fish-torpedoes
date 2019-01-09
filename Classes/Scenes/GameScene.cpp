@@ -20,8 +20,6 @@
 
 #include "Scenes/GameScene.h"
 
-#include "SimpleAudioEngine.h"
-
 #include "ConfigParser.h"
 #include "Scenes/PauseScene.h"
 #include "Scenes/EndScene.h"
@@ -29,6 +27,8 @@
 #include "Objects/Fish.h"
 #include "Objects/KillerFish.h"
 #include "Objects/Torpedo.h"
+
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -39,14 +39,14 @@ bool GameScene::init()
         return false;
 
     // Parse config
-    ConfigParser config;
+    const ConfigParser config;
     fishCount = config.getCount();
     bulletSpeed = config.getSpeed();
     timeLeft = static_cast<unsigned>(config.getTime());
 
     // Background
-    auto background = Background::create();
-    auto buttomBody = PhysicsBody::createBox(background->getButtom()->getContentSize());
+    auto *background = Background::create();
+    auto *buttomBody = PhysicsBody::createBox(background->getButtom()->getContentSize());
     buttomBody->setDynamic(false);
     buttomBody->setContactTestBitmask(0x01);
     background->getButtom()->setPhysicsBody(buttomBody);
@@ -54,7 +54,7 @@ bool GameScene::init()
     this->addChild(background);
 
     // Labels
-    auto visibleSize = Director::getInstance()->getVisibleSize();
+    const Size visibleSize = Director::getInstance()->getVisibleSize();
     timeLabel = Label::createWithTTF("Time left: " + std::to_string(timeLeft), "Fonts/DSMarkerFelt.ttf", 24, Size::ZERO, TextHAlignment::RIGHT);
     timeLabel->setPosition(visibleSize.width - timeLabel->getContentSize().width / 2 - 10, visibleSize.height - timeLabel->getContentSize().height / 2 - 10);
     schedule(CC_SCHEDULE_SELECTOR(GameScene::updateTime), 1.0f, timeLeft - 1, 1.0f);
@@ -65,16 +65,16 @@ bool GameScene::init()
     addChild(scoreLabel);
 
     // Collision event listener
-    auto contactListener = EventListenerPhysicsContact::create();
+    auto *contactListener = EventListenerPhysicsContact::create();
     contactListener->onContactPostSolve = CC_CALLBACK_1(GameScene::onContactPostSolve, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
     // World boundaries
-    auto edgeNode = Node::create();
+    auto *edgeNode = Node::create();
     edgeNode->setPosition(Point(visibleSize.width / 2, visibleSize.height / 2));
     this->addChild(edgeNode);
 
-    auto edgeBody = PhysicsBody::createEdgeBox(visibleSize, PhysicsMaterial(0.1f, 1.0f, 0.0f));
+    auto *edgeBody = PhysicsBody::createEdgeBox(visibleSize, PhysicsMaterial(0.1f, 1.0f, 0.0f));
     edgeBody->setDynamic(false);
     edgeBody->setContactTestBitmask(0x01);
     edgeNode->setPhysicsBody(edgeBody);
@@ -89,8 +89,8 @@ bool GameScene::init()
     cannonMount->setPosition(visibleSize.width / 2, cannonMount->getContentSize().height / 2 + 52);
     cannonTube->setPosition(cannonMount->getPosition().x, cannonMount->getPosition().y - 10);
 
-    auto mountBody = PhysicsBody::createBox(cannonMount->getContentSize());
-    auto tubeBody = PhysicsBody::createBox(cannonTube->getContentSize());
+    auto *mountBody = PhysicsBody::createBox(cannonMount->getContentSize());
+    auto *tubeBody = PhysicsBody::createBox(cannonTube->getContentSize());
 
     mountBody->setContactTestBitmask(0x01);
     tubeBody->setContactTestBitmask(0x01);
@@ -106,8 +106,8 @@ bool GameScene::init()
     this->addChild(cannonMount);
 
     // Fish
-    for (auto i = 0; i < fishCount; i++) {
-        auto fish = Fish::create();
+    for (int i = 0; i < fishCount; ++i) {
+        auto *fish = Fish::create();
         fish->setPosition(random<float>(0, visibleSize.width), random<float>(visibleSize.height / 2, visibleSize.height));
         fish->getPhysicsBody()->setContactTestBitmask(0x01);
         fish->setTag(Tag::FISH);
@@ -125,13 +125,13 @@ bool GameScene::init()
     this->scheduleOnce(CC_SCHEDULE_SELECTOR(GameScene::spawnKillerFish), random(4, 7));
 
     // Mouse listener
-    auto mouseListener = EventListenerMouse::create();
+    auto *mouseListener = EventListenerMouse::create();
     mouseListener->onMouseMove = CC_CALLBACK_1(GameScene::onMoseMove, this);
     mouseListener->onMouseUp = CC_CALLBACK_1(GameScene::onMouseUp, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
     // Keyboard listener
-    auto keyboardListener = EventListenerKeyboard::create();
+    auto *keyboardListener = EventListenerKeyboard::create();
     keyboardListener->onKeyReleased = CC_CALLBACK_1(GameScene::onKeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
@@ -141,16 +141,16 @@ bool GameScene::init()
 void GameScene::updateTime(float delta)
 {
     timeLeft -= delta;
-       if(timeLeft <= 0){
-           this->endGame();
-       }
-       timeLabel->setString("Time left: " + std::to_string(timeLeft));
+    if (timeLeft <= 0) {
+        this->endGame();
+    }
+    timeLabel->setString("Time left: " + std::to_string(timeLeft));
 }
 
 void GameScene::spawnKillerFish(float delta)
 {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto killerFish = KillerFish::create();
+    const Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto *killerFish = KillerFish::create();
     killerFish->getPhysicsBody()->setContactTestBitmask(0x01);
     killerFish->setTag(Tag::KILLER_FISH);
 
@@ -180,7 +180,7 @@ void GameScene::explodeCannon()
     _eventDispatcher->removeEventListenersForType(EventListener::Type::MOUSE);
     _eventDispatcher->removeEventListenersForType(EventListener::Type::KEYBOARD);
 
-    auto explosion = ParticleSystemQuad::create("Particles/CannonExplosion.plist");
+    auto *explosion = ParticleSystemQuad::create("Particles/CannonExplosion.plist");
     explosion->setPosition(cannonTube->getPosition());
     this->addChild(explosion);
 
@@ -192,17 +192,17 @@ void GameScene::explodeCannon()
 
 void GameScene::endGame()
 {
-    auto endScene = EndScene::create();
+    auto *endScene = EndScene::create();
     endScene->setScore(fishCount, fishKilled, timeLeft);
     Director::getInstance()->pushScene(TransitionSlideInB::create(0.5, endScene));
 }
 
 void GameScene::onMoseMove(Event *event)
 {
-    auto mousePosition = static_cast<EventMouse*>(event)->getLocationInView();
-    float cathete1 = mousePosition.y - cannonTube->getPosition().y;
-    float cathete2 = mousePosition.x - cannonTube->getPosition().x;
-    auto angle = atan(cathete2 / cathete1) * 57.295f; // 57.295 = 180 / PI
+    const Vec2 mousePosition = static_cast<EventMouse*>(event)->getLocationInView();
+    const float cathete1 = mousePosition.y - cannonTube->getPosition().y;
+    const float cathete2 = mousePosition.x - cannonTube->getPosition().x;
+    const float angle = atan(cathete2 / cathete1) * 57.295f; // 57.295 = 180 / PI
     if (angle > -60 && angle < 60)
         cannonTube->setRotation(angle);
 
@@ -210,13 +210,13 @@ void GameScene::onMoseMove(Event *event)
 
 void GameScene::onMouseUp(Event *event)
 {
-    auto torpedo = Torpedo::create();
+    auto *torpedo = Torpedo::create();
     torpedo->setRotation(cannonTube->getRotation());
     torpedo->getPhysicsBody()->setContactTestBitmask(0x01);
     torpedo->setTag(Tag::TORPEDO);
 
     // Calculate velocity
-    auto velocity = static_cast<EventMouse*>(event)->getLocationInView() - cannonTube->getPosition(); // Calculate velocity vector from cursor position
+    Vec2 velocity = static_cast<EventMouse*>(event)->getLocationInView() - cannonTube->getPosition(); // Calculate velocity vector from cursor position
     velocity.normalize(); // Make speed independent of the cursor distance
     torpedo->setVelocity(velocity.x * bulletSpeed, velocity.y * bulletSpeed);
 
@@ -227,7 +227,7 @@ void GameScene::onMouseUp(Event *event)
     this->addChild(torpedo);
 
     // Add effect
-    auto muzzleFlash = ParticleSystemQuad::create("Particles/MuzzleFlash.plist");
+    auto *muzzleFlash = ParticleSystemQuad::create("Particles/MuzzleFlash.plist");
     muzzleFlash->setPosition(position);
     this->addChild(muzzleFlash);
 
@@ -236,18 +236,17 @@ void GameScene::onMouseUp(Event *event)
 void GameScene::onKeyReleased(EventKeyboard::KeyCode keyCode)
 {
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
-        auto pauseScene = PauseScene::create();
+        auto *pauseScene = PauseScene::create();
         Director::getInstance()->pushScene(TransitionSlideInB::create(0.5, pauseScene));
     }
 }
 
 bool GameScene::onContactPostSolve(PhysicsContact &contact)
 {
-    auto nodeA = contact.getShapeA()->getBody()->getNode();
-    auto nodeB = contact.getShapeB()->getBody()->getNode();
+    Node *nodeA = contact.getShapeA()->getBody()->getNode();
+    Node *nodeB = contact.getShapeB()->getBody()->getNode();
 
     if (nodeA && nodeB) {
-
         // Torpedo and fish
         if ((nodeA->getTag() == Tag::FISH && nodeB->getTag() == Tag::TORPEDO) ||
                 (nodeB->getTag() == Tag::FISH && nodeA->getTag() == Tag::TORPEDO)) {
@@ -256,8 +255,7 @@ bool GameScene::onContactPostSolve(PhysicsContact &contact)
                 static_cast<Fish*>(nodeA)->kill();
                 nodeA->setTag(Tag::DEAD_FISH);
                 static_cast<Torpedo*>(nodeB)->explodeNormal();
-            }
-            else {
+            } else {
                 static_cast<Fish*>(nodeB)->kill();
                 nodeB->setTag(Tag::DEAD_FISH);
                 static_cast<Torpedo*>(nodeA)->explodeNormal();
@@ -270,18 +268,16 @@ bool GameScene::onContactPostSolve(PhysicsContact &contact)
                 this->endGame();
 
             return true;
-
         }
 
         // Torpedo and killer fish
         if ((nodeA->getTag() == Tag::KILLER_FISH && nodeB->getTag() == Tag::TORPEDO) ||
-                (nodeB->getTag() == Tag::KILLER_FISH && nodeA->getTag() == Tag::TORPEDO)){
+                (nodeB->getTag() == Tag::KILLER_FISH && nodeA->getTag() == Tag::TORPEDO)) {
 
             if (nodeA->getTag() == Tag::KILLER_FISH) {
                 static_cast<KillerFish*>(nodeA)->kill();
                 static_cast<Torpedo*>(nodeB)->explodeNormal();
-            }
-            else {
+            } else {
                 static_cast<KillerFish*>(nodeB)->kill();
                 static_cast<Torpedo*>(nodeA)->explodeNormal();
             }
@@ -316,8 +312,7 @@ bool GameScene::onContactPostSolve(PhysicsContact &contact)
             if (nodeA->getTag() == Tag::KILLER_FISH) {
                 static_cast<KillerFish*>(nodeA)->kill();
                 explodeCannon();
-            }
-            else {
+            } else {
                 static_cast<KillerFish*>(nodeB)->kill();
                 explodeCannon();
             }
@@ -332,6 +327,7 @@ bool GameScene::onContactPostSolve(PhysicsContact &contact)
             else
                 static_cast<Fish*>(nodeA)->setFlippedX(false);
         }
+
         if (nodeB->getTag() == Tag::FISH) {
             if (nodeB->getPhysicsBody()->getVelocity().getAngle() > 1.57f || nodeB->getPhysicsBody()->getVelocity().getAngle() < -1.57f) // 1.57 ~ PI / 2
                 static_cast<Fish*>(nodeB)->setFlippedX(true);

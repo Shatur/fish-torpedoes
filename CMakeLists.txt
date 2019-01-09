@@ -16,9 +16,6 @@ if(LINUX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -no-pie")
 endif()
 
-set(GAME_SOURCE)
-set(GAME_HEADER)
-
 set(GAME_RES_FOLDER
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
     )
@@ -27,7 +24,7 @@ if(WINDOWS)
 endif()
 
 # Source
-list(APPEND GAME_SOURCE
+set(GAME_SOURCE
     Classes/AppDelegate.cpp
     Classes/ConfigParser.cpp
     Classes/Scenes/SplashScene.cpp
@@ -43,7 +40,7 @@ list(APPEND GAME_SOURCE
     )
 
 # Headers
-list(APPEND GAME_HEADER
+set(GAME_HEADER
     Classes/AppDelegate.h
     Classes/ConfigParser.h
     Classes/Scenes/SplashScene.h

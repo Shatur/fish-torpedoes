@@ -21,8 +21,6 @@
 #ifndef CONFIGPARSER_H
 #define CONFIGPARSER_H
 
-#include <string>
-
 class ConfigParser
 {
 public:

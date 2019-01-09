@@ -34,28 +34,27 @@ bool SettingsScene::init()
         return false;
 
     // Background
-    auto background = Background::create();
+    auto *background = Background::create();
     this->addChild(background);
 
     // Fish
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 7; ++i)
         background->spawnDecorFish();
-    }
 
     // Title
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto title = ui::Text::create("Settings", "Fonts/DSMarkerFelt.ttf", 48);
+    const Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto *title = ui::Text::create("Settings", "Fonts/DSMarkerFelt.ttf", 48);
     title->setAnchorPoint(Vec2(0.5f, 0));
     title->setPosition(Vec2(visibleSize.width / 2, visibleSize.height * 0.75f - title->getContentSize().height));
     this->addChild(title);
 
     // Labels
-    auto countText = ui::Text::create();
+    auto *countText = ui::Text::create();
     countText->setFontName("Fonts/DSMarkerFelt.ttf");
     countText->setFontSize(24);
     countText->setAnchorPoint(Vec2(0.5f, 0));
-    auto speedText = static_cast<ui::Text*>(countText->clone());
-    auto timeText = static_cast<ui::Text*>(speedText->clone());
+    auto *speedText = static_cast<ui::Text*>(countText->clone());
+    auto *timeText = static_cast<ui::Text*>(speedText->clone());
 
     countText->setString("Number of fish");
     speedText->setString("Torpedo speed");
@@ -66,7 +65,6 @@ bool SettingsScene::init()
     countSlider->setAnchorPoint(Vec2(0.5, 0));
     speedSlider = static_cast<ui::Slider*>(countSlider->clone());
     timeSlider = static_cast<ui::Slider*>(countSlider->clone());
-
 
     countSlider->setMaxPercent(50);
     speedSlider->setMaxPercent(1000);
@@ -118,10 +116,10 @@ bool SettingsScene::init()
     this->addChild(timeSlider);
 
     // Cancel and confirm buttons
-    auto cancelButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
+    auto *cancelButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
     cancelButton->setTitleFontName("Fonts/DSMarkerFelt.ttf");
     cancelButton->setTitleFontSize(22);
-    auto applyButton = ui::Button::create("UI/BlueButtonNormal.png", "UI/BlueButtonPressed.png");
+    auto *applyButton = ui::Button::create("UI/BlueButtonNormal.png", "UI/BlueButtonPressed.png");
     applyButton->setTitleFontName("Fonts/DSMarkerFelt.ttf");
     applyButton->setTitleFontSize(22);
 
@@ -132,7 +130,7 @@ bool SettingsScene::init()
     applyButton->addClickEventListener(CC_CALLBACK_0(SettingsScene::applySettings, this));
 
     // Buttons container
-    auto menuLayout = ui::HBox::create();
+    auto *menuLayout = ui::HBox::create();
     menuLayout->addChild(cancelButton);
     menuLayout->addChild(applyButton);
     menuLayout->setPosition(Vec2(visibleSize.width / 2 - cancelButton->getContentSize().width, visibleSize.height * 0.25f));
@@ -150,7 +148,7 @@ void SettingsScene::applySettings()
     config.setTime(timeSlider->getPercent());
     config.writeConfig();
 
-    auto mainMenuScene = MainMenuScene::create();
+    auto *mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInR::create(0.5, mainMenuScene));
 }
 
@@ -158,7 +156,7 @@ void SettingsScene::cancelSettings()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
 
-    auto mainMenuScene = MainMenuScene::create();
+    auto *mainMenuScene = MainMenuScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInR::create(0.5, mainMenuScene));
 }
 
@@ -167,8 +165,7 @@ void SettingsScene::setCountSlider()
     int value;
     try {
         value = std::stoi(countField->getString());
-    }
-    catch (...) {
+    } catch (...) {
         value = 0;
     }
 
@@ -180,8 +177,7 @@ void SettingsScene::setSpeedSlider()
     int value;
     try {
         value = std::stoi(speedField->getString());
-    }
-    catch (...) {
+    } catch (...) {
         value = 0;
     }
 
@@ -193,8 +189,7 @@ void SettingsScene::setTimeSlider()
     int value;
     try {
         value = std::stoi(timeField->getString());
-    }
-    catch (...) {
+    } catch (...) {
         value = 0;
     }
 

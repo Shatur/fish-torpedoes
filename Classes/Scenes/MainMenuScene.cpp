@@ -20,12 +20,12 @@
 
 #include "Scenes/MainMenuScene.h"
 
-#include "ui/CocosGUI.h"
-#include "SimpleAudioEngine.h"
-
 #include "Scenes/SettingsScene.h"
 #include "Scenes/GameScene.h"
 #include "Objects/Background.h"
+
+#include "ui/CocosGUI.h"
+#include "SimpleAudioEngine.h"
 
 using namespace CocosDenshion;
 
@@ -35,20 +35,19 @@ bool MainMenuScene::init()
         return false;
 
     // Background
-    auto background = Background::create();
+    auto *background = Background::create();
     this->addChild(background);
 
     // Fish
-    for (int i = 0; i < 7; i++) {
+    for (int i = 0; i < 7; ++i)
         background->spawnDecorFish();
-    }
 
     // Buttons
-    auto newGameButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
+    auto *newGameButton = ui::Button::create("UI/OrangeButtonNormal.png", "UI/OrangeButtonPressed.png");
     newGameButton->setTitleFontName("Fonts/DSMarkerFelt.ttf");
     newGameButton->setTitleFontSize(22);
-    auto settingsButton = static_cast<ui::Button*>(newGameButton->clone());
-    auto quitButton = static_cast<ui::Button*>(settingsButton->clone());
+    auto *settingsButton = static_cast<ui::Button*>(newGameButton->clone());
+    auto *quitButton = static_cast<ui::Button*>(settingsButton->clone());
 
     newGameButton->setTitleText("New Game");
     settingsButton->setTitleText("Settings");
@@ -59,8 +58,8 @@ bool MainMenuScene::init()
     quitButton->addClickEventListener(CC_CALLBACK_0(MainMenuScene::quit, this));
 
     // Buttons container
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto menuLayout = ui::VBox::create();
+    const Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto *menuLayout = ui::VBox::create();
     menuLayout->addChild(newGameButton);
     menuLayout->addChild(settingsButton);
     menuLayout->addChild(quitButton);
@@ -69,7 +68,7 @@ bool MainMenuScene::init()
     this->addChild(menuLayout);
 
     // Logo
-    auto logo = Label::createWithTTF("Fish Torpedoes", "Fonts/DSMarkerFelt.ttf", 48, Size::ZERO, TextHAlignment::CENTER);
+    auto *logo = Label::createWithTTF("Fish Torpedoes", "Fonts/DSMarkerFelt.ttf", 48, Size::ZERO, TextHAlignment::CENTER);
     logo->setPosition(visibleSize.width / 2, visibleSize.height * 0.75f + logo->getContentSize().height / 2);
     this->addChild(logo);
 
@@ -80,7 +79,7 @@ void MainMenuScene::toGameScene()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
 
-    auto gameScene = GameScene::create();
+    auto *gameScene = GameScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInR::create(0.5, gameScene));
 }
 
@@ -88,13 +87,12 @@ void MainMenuScene::toSettings()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
 
-    auto gameScene = SettingsScene::create();
+    auto *gameScene = SettingsScene::create();
     Director::getInstance()->replaceScene(TransitionSlideInL::create(0.5, gameScene));
 }
 
 void MainMenuScene::quit()
 {
     SimpleAudioEngine::getInstance()->playEffect("Sounds/Click.ogg");
-
     Director::getInstance()->end();
 }

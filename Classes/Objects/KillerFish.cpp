@@ -30,7 +30,7 @@ bool KillerFish::init()
     sprite = Sprite::create("Fish/KillerFish.png");
     this->addChild(sprite);
 
-    auto body = PhysicsBody::createCircle(sprite->getContentSize().width / 2, PhysicsMaterial(100, 1.0f, 0));
+    auto *body = PhysicsBody::createCircle(sprite->getContentSize().width / 2, PhysicsMaterial(100, 1.0f, 0));
     body->setGravityEnable(false);
     this->addComponent(body);
 
@@ -39,7 +39,7 @@ bool KillerFish::init()
 
 void KillerFish::kill()
 {
-    auto explosion = ParticleSystemQuad::create("Particles/KillerFishExplosion.plist");
+    auto *explosion = ParticleSystemQuad::create("Particles/KillerFishExplosion.plist");
     explosion->setPosition(this->getPosition());
     this->getParent()->addChild(explosion);
     this->removeFromParentAndCleanup(true);

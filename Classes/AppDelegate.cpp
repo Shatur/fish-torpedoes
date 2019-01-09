@@ -20,10 +20,10 @@
 
 #include "AppDelegate.h"
 
-#include "audio/include/SimpleAudioEngine.h"
-
 #include "Scenes/GameScene.h"
 #include "Scenes/SplashScene.h"
+
+#include "audio/include/SimpleAudioEngine.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -49,39 +49,31 @@ void AppDelegate::initGLContextAttrs()
 bool AppDelegate::applicationDidFinishLaunching()
 {
     // Initialize director
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
+    auto *director = Director::getInstance();
+    GLView *glview = director->getOpenGLView();
 
-    if(!glview) {
+    if (!glview) {
         glview = GLViewImpl::createWithRect("FishTorpedoes", cocos2d::Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
         director->setOpenGLView(glview);
     }
 
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-    auto frameSize = glview->getFrameSize();
-    // If the frame's height is larger than the height of medium size
-    if (frameSize.height > mediumResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(largeResolutionSize.height/designResolutionSize.height, largeResolutionSize.width/designResolutionSize.width));
-    }
-    // If the frame's height is larger than the height of small size
-    else if (frameSize.height > smallResolutionSize.height)
-    {        
-        director->setContentScaleFactor(MIN(mediumResolutionSize.height/designResolutionSize.height, mediumResolutionSize.width/designResolutionSize.width));
-    }
-    // If the frame's height is smaller than the height of medium size
-    else
-    {        
-        director->setContentScaleFactor(MIN(smallResolutionSize.height/designResolutionSize.height, smallResolutionSize.width/designResolutionSize.width));
-    }
+    const Size frameSize = glview->getFrameSize();
 
-    auto scene = SplashScene::create();
+    if (frameSize.height > mediumResolutionSize.height)
+        director->setContentScaleFactor(MIN(largeResolutionSize.height / designResolutionSize.height, largeResolutionSize.width / designResolutionSize.width));
+    else if (frameSize.height > smallResolutionSize.height)
+        director->setContentScaleFactor(MIN(mediumResolutionSize.height / designResolutionSize.height, mediumResolutionSize.width / designResolutionSize.width));
+    else
+        director->setContentScaleFactor(MIN(smallResolutionSize.height / designResolutionSize.height, smallResolutionSize.width / designResolutionSize.width));
+
+    auto *scene = SplashScene::create();
     director->runWithScene(scene);
     return true;
 }
 
-// This function will be called when the app is inactive
+// Pause the game
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
@@ -89,7 +81,7 @@ void AppDelegate::applicationDidEnterBackground()
     SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
-// This function will be called when the app is active again
+// Resume the game
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
